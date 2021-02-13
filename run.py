@@ -61,11 +61,6 @@ with open('data_dump_final.txt') as json_file:
 ####################### DATA Preparation ################
 
 def avarage_interval_creator(data,interval):
-    #adding parameters
-    for obs in data:
-        obs["time"] = datetime.datetime.strptime(obs["timestamp"], '%Y-%m-%dT%H:%M:%S.%f000Z')
-        obs["seconds_since_midnight"] = obs["time"].hour * 3600 + obs["time"].minute * 60 + obs["time"].second + (obs["time"].microsecond / 1000000.0)
-
     last_interval = 0
     temp_amount_sum = 0
     temp_price_sum = 0
@@ -106,19 +101,104 @@ def avarage_interval_creator(data,interval):
     
     return new_data
 
-interval = 600 #10 min interval
-new_mydata= avarage_interval_creator(mydata,interval)
+def Observ_merge(data,interval):
+    new_data = []
+    temp_obj = {"interval_id": None, "year": None ,"day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None}    
+    last_obs = data[0]
 
+    for obs in data:
+        if (obs["interval_id"] == last_obs["interval_id"]) and (obs["day"] == last_obs["day"]): 
+            
+            if obs["is_bitfinex"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bf"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bf"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_bf"] = last_obs["avg_price"]
+                temp_obj["min_pr_bf"] = last_obs["min_price"]
+                temp_obj["max_pr_bf"] = last_obs["max_price"]
+                temp_obj["val_bf"] = last_obs["value"]
+            elif obs["is_bitstamp"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bs"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bs"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_bs"] = last_obs["avg_price"]
+                temp_obj["min_pr_bs"] = last_obs["min_price"]
+                temp_obj["max_pr_bs"] = last_obs["max_price"]
+                temp_obj["val_bs"] = last_obs["value"]
+            elif obs["is_kraken"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_kr"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_kr"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_kr"] = last_obs["avg_price"]
+                temp_obj["min_pr_kr"] = last_obs["min_price"]
+                temp_obj["max_pr_kr"] = last_obs["max_price"]
+                temp_obj["val_kr"] = last_obs["value"]
+            
+            last_obs = obs    
+
+        else:
+            new_data.append(temp_obj) 
+            temp_obj = {"interval_id": None, "year": None ,"day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None}    
+            
+            if obs["is_bitfinex"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bf"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bf"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_bf"] = last_obs["avg_price"]
+                temp_obj["min_pr_bf"] = last_obs["min_price"]
+                temp_obj["max_pr_bf"] = last_obs["max_price"]
+                temp_obj["val_bf"] = last_obs["value"]
+            elif obs["is_bitstamp"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bs"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bs"]= last_obs["avg_amount"] 
+                temp_obj["avg_pr_bs"] = last_obs["avg_price"] 
+                temp_obj["min_pr_bs"] = last_obs["min_price"] 
+                temp_obj["max_pr_bs"] = last_obs["max_price"]
+                temp_obj["val_bs"] = last_obs["value"]
+            elif obs["is_kraken"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_kr"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_kr"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_kr"] = last_obs["avg_price"] 
+                temp_obj["min_pr_kr"] = last_obs["min_price"] 
+                temp_obj["max_pr_kr"] = last_obs["max_price"] 
+                temp_obj["val_kr"] = last_obs["value"]
+            
+            last_obs = obs    
+  
+    return new_data    
+
+
+
+#adding parameters
+for obs in mydata:
+    obs["time"] = datetime.datetime.strptime(obs["timestamp"], '%Y-%m-%dT%H:%M:%S.%f000Z')
+    obs["seconds_since_midnight"] = obs["time"].hour * 3600 + obs["time"].minute * 60 + obs["time"].second + (obs["time"].microsecond / 1000000.0)
+
+interval = 600 #10 min interval
+
+new_mydata = avarage_interval_creator(mydata,interval)
 new_mydata = sorted(new_mydata,key=(lambda s: s['time']))
 
-counter=0
-for i in new_mydata:
-    i['interval_id'] = counter
-    counter = counter + 1
-'''
+new_mydata = Observ_merge(new_mydata,interval)
+
+
 ################ Excel #################
 
-df = pd.DataFrame(new_mydata, columns=[ "interval_id","avg_seconds_since_midnight", "avg_amount", "avg_price", "min_price", "max_price" ,"value", "market", "year", "day", "is_kraken", "is_bitstamp", "is_bitfinex"])
+df = pd.DataFrame(new_mydata, columns=["interval_id", "year", "day", "avg_sec_bs", "avg_am_bs", "avg_pr_bs", "min_pr_bs", "max_pr_bs", "val_bs", "avg_sec_kr", "avg_am_kr", "avg_pr_kr", "min_pr_kr", "max_pr_kr", "val_kr", "avg_sec_bf", "avg_am_bf", "avg_pr_bf", "min_pr_bf", "max_pr_bf", "val_bf"])
 
 root = tk.Tk()
 
@@ -140,9 +220,5 @@ canvas1.create_window(150, 150, window=saveAsButtonExcel)
 root.mainloop()
 
 
-
-#with open('data2.txt', 'w') as outfile:
-#    json.dump(mydata, outfile, cls=DateTimeEncoder)
-'''
-
-
+with open('data4.txt', 'w') as outfile:
+    json.dump(new_mydata, outfile, indent=4, sort_keys=True, default=str)
