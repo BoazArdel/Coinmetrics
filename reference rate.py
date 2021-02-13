@@ -11,12 +11,10 @@ from passwords import API_KEY
 
 #client = CoinMetricsClient(API_KEY)
 
-
 #response = requests.get('https://api.coinmetrics.io/v4/catalog-all/exchanges?pretty=true&api_key=' + API_KEY).json()
 #response = requests.get('https://api.coinmetrics.io/v4/catalog-all/markets?pretty=true&api_key=' + API_KEY).json()
 #response = requests.get('https://api.coinmetrics.io/v4/timeseries/market-trades?start_time=2010-07-17&paging_from=start&markets=bitfinex-btc-usd-spot&pretty=true&api_key=' + API_KEY).json()
 #print(response)
-#exit()
 
 #indexes request: 'mt.gox-btc-usd-spot'], 'min_time': '2010-07-17T23:09:17.000000000Z', 'max_time': '2014-02-25T01:59:06.000000000Z'}
 
