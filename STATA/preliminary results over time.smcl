@@ -1,0 +1,506 @@
+{smcl}
+{com}{sf}{ul off}{txt}{.-}
+      name:  {res}<unnamed>
+       {txt}log:  {res}D:\Files\Google Drive (gabryu@gmail.com)\Projects\PycharmProjects\coinmetrics\15to20 bf bs kr stata data\preliminary results over time.smcl
+  {txt}log type:  {res}smcl
+ {txt}opened on:  {res}15 Dec 2020, 15:35:51
+
+{com}. do "D:\Files\Google Drive (gabryu@gmail.com)\Projects\PycharmProjects\coinmetrics\15to20 bf bs kr stata data\preliminary results over time.do"
+{txt}
+{com}. use "D:\Files\Google Drive (gabryu@gmail.com)\Projects\PycharmProjects\coinmetrics\15to20 bf bs kr stata data\All_data.dta"
+{txt}
+{com}. 
+. ***preliminary results do file***
+. 
+. gen kr_diff = kr_price_max - kr_price_min
+{txt}(81,453 missing values generated)
+
+{com}. gen bf_diff = bf_price_max - bf_price_min
+{txt}(81,453 missing values generated)
+
+{com}. gen bs_diff = bs_price_max - bs_price_min
+{txt}
+{com}. 
+. ***summary stats***
+. 
+. sum bf_price_mean bs_price_mean bf_price_mean if year == 2015
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+bf_price_~an {c |}{res}     16,829    230.6393           0   230.6393   230.6393
+{txt}bs_price_~an {c |}{res}     23,197    233.0575    1.906634   226.1041   236.1836
+{txt}bf_price_~an {c |}{res}     16,829    230.6393           0   230.6393   230.6393
+{txt}
+{com}. sum bf_price_mean bs_price_mean bf_price_mean if year == 2016
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+bf_price_~an {c |}{res}     18,434    389.4146           0   389.4146   389.4146
+{txt}bs_price_~an {c |}{res}     27,136    393.3745    5.840658   376.0253   409.7562
+{txt}bf_price_~an {c |}{res}     18,434    389.4146           0   389.4146   389.4146
+{txt}
+{com}. sum bf_price_mean bs_price_mean bf_price_mean if year == 2017
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+bf_price_~an {c |}{res}      7,197    896.1396           0   896.1396   896.1396
+{txt}bs_price_~an {c |}{res}     15,706    896.2943    5.171887   883.5922   901.8912
+{txt}bf_price_~an {c |}{res}      7,197    896.1396           0   896.1396   896.1396
+{txt}
+{com}. sum bf_price_mean bs_price_mean bf_price_mean if year == 2018
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+bf_price_~an {c |}{res}    207,822    11316.91           0   11316.91   11316.91
+{txt}bs_price_~an {c |}{res}    256,080    11354.49    125.0832   11109.81   11985.37
+{txt}bf_price_~an {c |}{res}    207,822    11316.91           0   11316.91   11316.91
+{txt}
+{com}. sum bf_price_mean bs_price_mean bf_price_mean if year == 2019
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+bf_price_~an {c |}{res}     23,365    3686.103           0   3686.103   3686.103
+{txt}bs_price_~an {c |}{res}     32,981    3619.876    8.337576   3587.161   3635.472
+{txt}bf_price_~an {c |}{res}     23,365    3686.103           0   3686.103   3686.103
+{txt}
+{com}. sum bf_price_mean bs_price_mean bf_price_mean if year == 2020
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+bf_price_~an {c |}{res}    103,435    8857.021    66.38813   8675.672   8963.825
+{txt}bs_price_~an {c |}{res}    103,435    8865.952    70.97083   8670.285   8971.983
+{txt}bf_price_~an {c |}{res}    103,435    8857.021    66.38813   8675.672   8963.825
+{txt}
+{com}. 
+. ***for year 2015***
+. 
+. correl *price_mean if year == 2015
+{txt}(obs=16,829)
+
+             {c |} bf_pr~an kr_pr~an bs_pr~an
+{hline 13}{c +}{hline 27}
+bf_price_~an {c |}{res}        .
+{txt}kr_price_~an {c |}{res}        .        .
+{txt}bs_price_~an {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_min if year == 2015
+{txt}(obs=16,829)
+
+             {c |} bf_pr~in kr_pr~in bs_pr~in
+{hline 13}{c +}{hline 27}
+bf_price_min {c |}{res}        .
+{txt}kr_price_min {c |}{res}        .        .
+{txt}bs_price_min {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_max if year == 2015
+{txt}(obs=16,829)
+
+             {c |} bf_pri~x kr_pri~x bs_pri~x
+{hline 13}{c +}{hline 27}
+bf_price_max {c |}{res}        .
+{txt}kr_price_max {c |}{res}        .        .
+{txt}bs_price_max {c |}{res}        .        .        .
+
+{txt}
+{com}. *correl bf_kr *price_mean value if year == 2015
+. 
+. ***for year 2016***
+. 
+. correl *price_mean if year == 2016
+{txt}(obs=18,434)
+
+             {c |} bf_pr~an kr_pr~an bs_pr~an
+{hline 13}{c +}{hline 27}
+bf_price_~an {c |}{res}        .
+{txt}kr_price_~an {c |}{res}        .        .
+{txt}bs_price_~an {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_min if year == 2016
+{txt}(obs=18,434)
+
+             {c |} bf_pr~in kr_pr~in bs_pr~in
+{hline 13}{c +}{hline 27}
+bf_price_min {c |}{res}        .
+{txt}kr_price_min {c |}{res}        .        .
+{txt}bs_price_min {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_max if year == 2016
+{txt}(obs=18,434)
+
+             {c |} bf_pri~x kr_pri~x bs_pri~x
+{hline 13}{c +}{hline 27}
+bf_price_max {c |}{res}        .
+{txt}kr_price_max {c |}{res}        .        .
+{txt}bs_price_max {c |}{res}        .        .        .
+
+{txt}
+{com}. *correl bf_kr *price_mean value if year == 2016
+. 
+. ***for year 2017***
+. 
+. correl *price_mean if year == 2017
+{txt}(obs=7,197)
+
+             {c |} bf_pr~an kr_pr~an bs_pr~an
+{hline 13}{c +}{hline 27}
+bf_price_~an {c |}{res}        .
+{txt}kr_price_~an {c |}{res}        .        .
+{txt}bs_price_~an {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_min if year == 2017
+{txt}(obs=7,197)
+
+             {c |} bf_pr~in kr_pr~in bs_pr~in
+{hline 13}{c +}{hline 27}
+bf_price_min {c |}{res}        .
+{txt}kr_price_min {c |}{res}        .        .
+{txt}bs_price_min {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_max if year == 2017
+{txt}(obs=7,197)
+
+             {c |} bf_pri~x kr_pri~x bs_pri~x
+{hline 13}{c +}{hline 27}
+bf_price_max {c |}{res}        .
+{txt}kr_price_max {c |}{res}        .        .
+{txt}bs_price_max {c |}{res}        .        .        .
+
+{txt}
+{com}. *correl bf_kr *price_mean value if year == 2017
+. 
+. ***for year 2018***
+. 
+. correl *price_mean if year == 2018
+{txt}(obs=207,822)
+
+             {c |} bf_pr~an kr_pr~an bs_pr~an
+{hline 13}{c +}{hline 27}
+bf_price_~an {c |}{res}        .
+{txt}kr_price_~an {c |}{res}        .        .
+{txt}bs_price_~an {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_min if year == 2018
+{txt}(obs=207,822)
+
+             {c |} bf_pr~in kr_pr~in bs_pr~in
+{hline 13}{c +}{hline 27}
+bf_price_min {c |}{res}        .
+{txt}kr_price_min {c |}{res}        .        .
+{txt}bs_price_min {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_max if year == 2018
+{txt}(obs=207,822)
+
+             {c |} bf_pri~x kr_pri~x bs_pri~x
+{hline 13}{c +}{hline 27}
+bf_price_max {c |}{res}        .
+{txt}kr_price_max {c |}{res}        .        .
+{txt}bs_price_max {c |}{res}        .        .        .
+
+{txt}
+{com}. *correl bf_kr *price_mean value if year == 2018
+. 
+. ***for year 2019***
+. 
+. correl *price_mean if year == 2019
+{txt}(obs=23,365)
+
+             {c |} bf_pr~an kr_pr~an bs_pr~an
+{hline 13}{c +}{hline 27}
+bf_price_~an {c |}{res}        .
+{txt}kr_price_~an {c |}{res}        .        .
+{txt}bs_price_~an {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_min if year == 2019
+{txt}(obs=23,365)
+
+             {c |} bf_pr~in kr_pr~in bs_pr~in
+{hline 13}{c +}{hline 27}
+bf_price_min {c |}{res}        .
+{txt}kr_price_min {c |}{res}        .        .
+{txt}bs_price_min {c |}{res}        .        .        .
+
+{txt}
+{com}. correl *price_max if year == 2019
+{txt}(obs=23,365)
+
+             {c |} bf_pri~x kr_pri~x bs_pri~x
+{hline 13}{c +}{hline 27}
+bf_price_max {c |}{res}        .
+{txt}kr_price_max {c |}{res}        .        .
+{txt}bs_price_max {c |}{res}        .        .        .
+
+{txt}
+{com}. *correl bf_kr *price_mean value if year == 2019
+. 
+. ***for year 2020***
+. 
+. correl *price_mean if year == 2020
+{txt}(obs=103,435)
+
+             {c |} bf_pr~an kr_pr~an bs_pr~an
+{hline 13}{c +}{hline 27}
+bf_price_~an {c |}{res}   1.0000
+{txt}kr_price_~an {c |}{res}   0.9902   1.0000
+{txt}bs_price_~an {c |}{res}   0.9919   0.9977   1.0000
+
+{txt}
+{com}. correl *price_min if year == 2020
+{txt}(obs=103,435)
+
+             {c |} bf_pr~in kr_pr~in bs_pr~in
+{hline 13}{c +}{hline 27}
+bf_price_min {c |}{res}   1.0000
+{txt}kr_price_min {c |}{res}   0.9881   1.0000
+{txt}bs_price_min {c |}{res}   0.9861   0.9978   1.0000
+
+{txt}
+{com}. correl *price_max if year == 2020
+{txt}(obs=103,435)
+
+             {c |} bf_pri~x kr_pri~x bs_pri~x
+{hline 13}{c +}{hline 27}
+bf_price_max {c |}{res}   1.0000
+{txt}kr_price_max {c |}{res}   0.9894   1.0000
+{txt}bs_price_max {c |}{res}   0.9922   0.9969   1.0000
+
+{txt}
+{com}. *correl bf_kr *price_mean value if year == 2020
+. 
+. ***Correlation between range within an exchange and trade in that exchange***
+. 
+. sum kr_diff bf_diff bs_diff if year ==2015
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}kr_diff {c |}{res}     16,829    8.560364           0   8.560364   8.560364
+{txt}{space 5}bf_diff {c |}{res}     16,829    11.84999           0   11.84999   11.84999
+{txt}{space 5}bs_diff {c |}{res}     23,197    1.324245    1.293417   .0400085   9.899994
+{txt}
+{com}. sum kr_diff bf_diff bs_diff if year ==2016
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}kr_diff {c |}{res}     18,434    35.66571           0   35.66571   35.66571
+{txt}{space 5}bf_diff {c |}{res}     18,434    39.95001           0   39.95001   39.95001
+{txt}{space 5}bs_diff {c |}{res}     27,136    19.51916    11.26496   .0100098   27.23001
+{txt}
+{com}. sum kr_diff bf_diff bs_diff if year ==2017
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}kr_diff {c |}{res}      7,197      22.104           0     22.104     22.104
+{txt}{space 5}bf_diff {c |}{res}      7,197    21.92999           0   21.92999   21.92999
+{txt}{space 5}bs_diff {c |}{res}     15,706    4.475545    2.529104          0   8.119995
+{txt}
+{com}. sum kr_diff bf_diff bs_diff if year ==2018
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}kr_diff {c |}{res}    207,822      1003.6           0     1003.6     1003.6
+{txt}{space 5}bf_diff {c |}{res}    207,822        1253           0       1253       1253
+{txt}{space 5}bs_diff {c |}{res}    256,080     328.804    95.38354   30.56934   410.8799
+{txt}
+{com}. sum kr_diff bf_diff bs_diff if year ==2019
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}kr_diff {c |}{res}     23,365    68.80005           0   68.80005   68.80005
+{txt}{space 5}bf_diff {c |}{res}     23,365    71.51147           0   71.51147   71.51147
+{txt}{space 5}bs_diff {c |}{res}     32,981     26.1253    11.31718   .8601074   33.17993
+{txt}
+{com}. sum kr_diff bf_diff bs_diff if year ==2020
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+{space 5}kr_diff {c |}{res}    103,435    39.96608    25.15381   2.599609   183.2998
+{txt}{space 5}bf_diff {c |}{res}    103,435    36.45026    26.19924   .0996094        156
+{txt}{space 5}bs_diff {c |}{res}    103,435    49.17799     26.1023   11.10938   190.7705
+{txt}
+{com}. 
+. correl kr_diff bf_diff bs_diff value if year==2015 
+{txt}(obs=16,829)
+
+             {c |}  kr_diff  bf_diff  bs_diff    value
+{hline 13}{c +}{hline 36}
+     kr_diff {c |}{res}        .
+     {txt}bf_diff {c |}{res}        .        .
+     {txt}bs_diff {c |}{res}        .        .        .
+       {txt}value {c |}{res}        .        .        .   1.0000
+
+{txt}
+{com}. correl kr_diff bf_diff bs_diff value if year==2016
+{txt}(obs=18,434)
+
+             {c |}  kr_diff  bf_diff  bs_diff    value
+{hline 13}{c +}{hline 36}
+     kr_diff {c |}{res}        .
+     {txt}bf_diff {c |}{res}        .        .
+     {txt}bs_diff {c |}{res}        .        .        .
+       {txt}value {c |}{res}        .        .        .   1.0000
+
+{txt}
+{com}. correl kr_diff bf_diff bs_diff value if year==2017
+{txt}(obs=7,197)
+
+             {c |}  kr_diff  bf_diff  bs_diff    value
+{hline 13}{c +}{hline 36}
+     kr_diff {c |}{res}        .
+     {txt}bf_diff {c |}{res}        .        .
+     {txt}bs_diff {c |}{res}        .        .        .
+       {txt}value {c |}{res}        .        .        .   1.0000
+
+{txt}
+{com}. correl kr_diff bf_diff bs_diff value if year==2018
+{txt}(obs=207,822)
+
+             {c |}  kr_diff  bf_diff  bs_diff    value
+{hline 13}{c +}{hline 36}
+     kr_diff {c |}{res}        .
+     {txt}bf_diff {c |}{res}        .        .
+     {txt}bs_diff {c |}{res}        .        .        .
+       {txt}value {c |}{res}        .        .        .   1.0000
+
+{txt}
+{com}. correl kr_diff bf_diff bs_diff value if year==2019
+{txt}(obs=23,365)
+
+             {c |}  kr_diff  bf_diff  bs_diff    value
+{hline 13}{c +}{hline 36}
+     kr_diff {c |}{res}        .
+     {txt}bf_diff {c |}{res}        .        .
+     {txt}bs_diff {c |}{res}        .        .        .
+       {txt}value {c |}{res}        .        .        .   1.0000
+
+{txt}
+{com}. correl kr_diff bf_diff bs_diff value if year==2020 
+{txt}(obs=103,435)
+
+             {c |}  kr_diff  bf_diff  bs_diff    value
+{hline 13}{c +}{hline 36}
+     kr_diff {c |}{res}   1.0000
+     {txt}bf_diff {c |}{res}   0.9331   1.0000
+     {txt}bs_diff {c |}{res}   0.9610   0.9320   1.0000
+       {txt}value {c |}{res}   0.0423   0.0371   0.0469   1.0000
+
+{txt}
+{com}. 
+. ***look at one exchange's minimum price versus another exchange's maximum price***
+. ***kr and bf***
+. gen spread_kr_bf = kr_price_max - bf_price_min
+{txt}(81,453 missing values generated)
+
+{com}. gen spread_bf_kr = bf_price_max - kr_price_min
+{txt}(81,453 missing values generated)
+
+{com}. ***kr and bs***
+. gen spread_kr_bs = kr_price_max - bs_price_min
+{txt}(81,453 missing values generated)
+
+{com}. gen spread_bs_kr = bs_price_max - kr_price_min
+{txt}(81,453 missing values generated)
+
+{com}. ***bs and bf***
+. gen spread_bs_bf = bs_price_max - bf_price_min
+{txt}(81,453 missing values generated)
+
+{com}. gen spread_bf_bs = bf_price_max - bs_price_min
+{txt}(81,453 missing values generated)
+
+{com}. 
+. sum spread* if year == 2015
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+spread_kr_bf {c |}{res}     16,829    6.106461           0   6.106461   6.106461
+{txt}spread_bf_kr {c |}{res}     16,829    14.30389           0   14.30389   14.30389
+{txt}spread_kr_bs {c |}{res}     16,829    -1.88353           0   -1.88353   -1.88353
+{txt}spread_bs_kr {c |}{res}     16,829     11.4039           0    11.4039    11.4039
+{txt}spread_bs_bf {c |}{res}     16,829    8.949997           0   8.949997   8.949997
+{txt}{hline 13}{c +}{hline 57}
+spread_bf_bs {c |}{res}     16,829    3.860001           0   3.860001   3.860001
+{txt}
+{com}. sum spread* if year == 2016
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+spread_kr_bf {c |}{res}     18,434    39.93988           0   39.93988   39.93988
+{txt}spread_bf_kr {c |}{res}     18,434    35.67584           0   35.67584   35.67584
+{txt}spread_kr_bs {c |}{res}     18,434    28.63989           0   28.63989   28.63989
+{txt}spread_bs_kr {c |}{res}     18,434    34.25583           0   34.25583   34.25583
+{txt}spread_bs_bf {c |}{res}     18,434       38.53           0      38.53      38.53
+{txt}{hline 13}{c +}{hline 57}
+spread_bf_bs {c |}{res}     18,434    28.65002           0   28.65002   28.65002
+{txt}
+{com}. sum spread* if year == 2017
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+spread_kr_bf {c |}{res}      7,197    24.04401           0   24.04401   24.04401
+{txt}spread_bf_kr {c |}{res}      7,197    19.98999           0   19.98999   19.98999
+{txt}spread_kr_bs {c |}{res}      7,197    11.46399           0   11.46399   11.46399
+{txt}spread_bs_kr {c |}{res}      7,197    17.22998           0   17.22998   17.22998
+{txt}spread_bs_bf {c |}{res}      7,197    19.16998           0   19.16998   19.16998
+{txt}{hline 13}{c +}{hline 57}
+spread_bf_bs {c |}{res}      7,197    9.349976           0   9.349976   9.349976
+{txt}
+{com}. sum spread* if year == 2018
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+spread_kr_bf {c |}{res}    207,822        1393           0       1393       1393
+{txt}spread_bf_kr {c |}{res}    207,822    863.5996           0   863.5996   863.5996
+{txt}spread_kr_bs {c |}{res}    207,822      837.29           0     837.29     837.29
+{txt}spread_bs_kr {c |}{res}    207,822    539.1797           0   539.1797   539.1797
+{txt}spread_bs_bf {c |}{res}    207,822    928.5801           0   928.5801   928.5801
+{txt}{hline 13}{c +}{hline 57}
+spread_bf_bs {c |}{res}    207,822      697.29           0     697.29     697.29
+{txt}
+{com}. sum spread* if year == 2019
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+spread_kr_bf {c |}{res}     23,365   -7.588379           0  -7.588379  -7.588379
+{txt}spread_bf_kr {c |}{res}     23,365    147.8999           0   147.8999   147.8999
+{txt}spread_kr_bs {c |}{res}     23,365    36.08008           0   36.08008   36.08008
+{txt}spread_bs_kr {c |}{res}     23,365     65.8999           0    65.8999    65.8999
+{txt}spread_bs_bf {c |}{res}     23,365   -10.48853           0  -10.48853  -10.48853
+{txt}{hline 13}{c +}{hline 57}
+spread_bf_bs {c |}{res}     23,365    115.1799           0   115.1799   115.1799
+{txt}
+{com}. sum spread* if year == 2020
+
+{txt}    Variable {c |}        Obs        Mean    Std. Dev.       Min        Max
+{hline 13}{c +}{hline 57}
+spread_kr_bf {c |}{res}    103,435    46.66695    28.95656  -2.700195        179
+{txt}spread_bf_kr {c |}{res}    103,435    29.74939    25.59269   -18.7998   160.2998
+{txt}spread_kr_bs {c |}{res}    103,435    43.65947    25.20923   6.369141   184.9805
+{txt}spread_bs_kr {c |}{res}    103,435     45.4846    26.13659   2.939453   189.0898
+{txt}spread_bs_bf {c |}{res}    103,435    52.18547    29.11128   6.799805     184.79
+{txt}{hline 13}{c +}{hline 57}
+spread_bf_bs {c |}{res}    103,435    33.44278    25.66118  -12.13086   161.9805
+{txt}
+{com}. 
+. 
+. 
+. 
+. 
+{txt}end of do-file
+
+{com}. log close
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}D:\Files\Google Drive (gabryu@gmail.com)\Projects\PycharmProjects\coinmetrics\15to20 bf bs kr stata data\preliminary results over time.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}15 Dec 2020, 15:36:00
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}
