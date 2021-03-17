@@ -28,7 +28,7 @@ def avarage_interval_creator(data,interval):
 
         else:
             if counter==0: counter=1 
-            new_data.append({"interval_id": int(last_interval), "avg_seconds_since_midnight": temp_time_sum/counter, "avg_amount": temp_amount_sum/counter, "avg_price": temp_price_sum/counter, "min_price": min_price, "max_price": max_price ,"value": (temp_amount_sum/counter)*(temp_price_sum/counter), "market": market , "year": last_time.year, "day": last_time.day,"time": last_time, "is_kraken": int("kraken" in market), "is_bitfinex": int("bitfinex" in market), "is_bitstamp": int("bitstamp" in market), "is_coinbase": int("coinbase" in market)})
+            new_data.append({"interval_id": int(last_interval), "avg_seconds_since_midnight": temp_time_sum/counter, "avg_amount": temp_amount_sum/counter, "avg_price": temp_price_sum/counter, "min_price": min_price, "max_price": max_price ,"value": (temp_amount_sum/counter)*(temp_price_sum/counter), "market": market , "year": last_time.year, "day": last_time.day,"time": last_time, "is_kraken": int("kraken" in market), "is_bitfinex": int("bitfinex" in market), "is_bitstamp": int("bitstamp" in market), "is_coinbase": int("coinbase" in market), "is_binance": int("binance" in market)})
             
             last_interval = obs["seconds_since_midnight"]/interval
             temp_amount_sum = float(obs["amount"])
@@ -59,6 +59,16 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_bf"] = last_obs["min_price"]
                 temp_obj["max_pr_bf"] = last_obs["max_price"]
                 temp_obj["val_bf"] = last_obs["value"]
+            elif obs["is_binance"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bn"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bn"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_bn"] = last_obs["avg_price"]
+                temp_obj["min_pr_bn"] = last_obs["min_price"]
+                temp_obj["max_pr_bn"] = last_obs["max_price"]
+                temp_obj["val_bn"] = last_obs["value"]
             elif obs["is_bitstamp"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
@@ -105,6 +115,16 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_bf"] = last_obs["min_price"]
                 temp_obj["max_pr_bf"] = last_obs["max_price"]
                 temp_obj["val_bf"] = last_obs["value"]
+            elif obs["is_binance"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bn"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bn"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_bn"] = last_obs["avg_price"]
+                temp_obj["min_pr_bn"] = last_obs["min_price"]
+                temp_obj["max_pr_bn"] = last_obs["max_price"]
+                temp_obj["val_bn"] = last_obs["value"]
             elif obs["is_bitstamp"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
