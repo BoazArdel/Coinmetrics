@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import pandas as pd
-global df
+
 ################ Excel #################
 def export_to_excel(data,columns_table):
     df = pd.DataFrame(data, columns=columns_table)
@@ -13,6 +13,8 @@ def export_to_excel(data,columns_table):
 
 
     def exportExcel():
+        global df
+
         export_file_path = filedialog.asksaveasfilename(defaultextension='.xlsx')
         df.to_excel(export_file_path, index=False, header=True)
 
@@ -24,12 +26,12 @@ def export_to_excel(data,columns_table):
     root.mainloop()
 
 #excel xslx to dta convertor
-def xlsx_to_dta(filename):
+def xslx_to_dta(filename):
     pd.read_excel(filename + '.xlsx', index_col=0).to_stata(filename + '.dta')
 
 #csv to dta convertor
 def csv_to_dta(filename):
-    pd.read_csv(filename + '.csv').to_stata(filename + '.dta')
+    pd.read_csv(filename + '.xlsx').to_stata(filename + '.dta')
 
 '''
 def csv_merger():

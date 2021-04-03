@@ -4,7 +4,6 @@ def avarage_interval_creator(data,interval):
     temp_amount_sum = 0
     temp_price_sum = 0
     temp_time_sum = 0
-    temp_pq_sum = 0
     min_price = 0
     max_price = 0
     counter = 0
@@ -17,7 +16,6 @@ def avarage_interval_creator(data,interval):
             temp_amount_sum = temp_amount_sum + float(obs["amount"])
             temp_time_sum = temp_time_sum + obs["seconds_since_midnight"]
             temp_price_sum = temp_price_sum + float(obs["price"])
-            temp_pq_sum = temp_pq_sum + float(obs["p*q"])
             market = obs["market"]
             last_time = obs["time"]
             counter = counter + 1
@@ -30,13 +28,12 @@ def avarage_interval_creator(data,interval):
 
         else:
             if counter==0: counter=1 
-            new_data.append({"interval_id": int(last_interval), "avg_seconds_since_midnight": temp_time_sum/counter, "avg_amount": temp_amount_sum/counter, "avg_price": temp_price_sum/counter, "min_price": min_price, "max_price": max_price ,"value": (temp_amount_sum/counter)*(temp_price_sum/counter), "market": market , "year": last_time.year, "month": last_time.month, "day": last_time.day,"time": last_time, "is_kraken": int("kraken" in market), "is_bitfinex": int("bitfinex" in market), "is_bitstamp": int("bitstamp" in market), "is_coinbase": int("coinbase" in market), "VWAP": temp_pq_sum/counter, "amount": obs["amount"]})
+            new_data.append({"interval_id": int(last_interval), "avg_seconds_since_midnight": temp_time_sum/counter, "avg_amount": temp_amount_sum/counter, "avg_price": temp_price_sum/counter, "min_price": min_price, "max_price": max_price ,"value": (temp_amount_sum/counter)*(temp_price_sum/counter), "market": market , "year": last_time.year, "day": last_time.day,"time": last_time, "is_kraken": int("kraken" in market), "is_bitfinex": int("bitfinex" in market), "is_bitstamp": int("bitstamp" in market), "is_coinbase": int("coinbase" in market), "is_binance": int("binance" in market)})
             
             last_interval = obs["seconds_since_midnight"]/interval
             temp_amount_sum = float(obs["amount"])
             temp_time_sum = obs["seconds_since_midnight"]
             temp_price_sum = float(obs["price"])
-            temp_pq_sum = float(obs["p*q"])
             counter = 1
             last_time = obs["time"]
             market = obs["market"]
@@ -46,7 +43,7 @@ def avarage_interval_creator(data,interval):
 
 def Observ_merge(data,interval):
     new_data = []
-    temp_obj = {"interval_id": None, "year": None ,"month": None, "day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None, "VWAP": None, "amount_bs": None, "amount_bf": None, "amount_cb": None, "amount_kr": None}
+    temp_obj = {"interval_id": None, "year": None ,"day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None}
     last_obs = data[0]
 
     for obs in data:
@@ -55,7 +52,6 @@ def Observ_merge(data,interval):
             if obs["is_bitfinex"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_bf"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_bf"]= last_obs["avg_amount"]
@@ -63,13 +59,19 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_bf"] = last_obs["min_price"]
                 temp_obj["max_pr_bf"] = last_obs["max_price"]
                 temp_obj["val_bf"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_bf"] = last_obs["amount"]
-
+            elif obs["is_binance"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bn"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bn"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_bn"] = last_obs["avg_price"]
+                temp_obj["min_pr_bn"] = last_obs["min_price"]
+                temp_obj["max_pr_bn"] = last_obs["max_price"]
+                temp_obj["val_bn"] = last_obs["value"]
             elif obs["is_bitstamp"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_bs"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_bs"]= last_obs["avg_amount"]
@@ -77,14 +79,9 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_bs"] = last_obs["min_price"]
                 temp_obj["max_pr_bs"] = last_obs["max_price"]
                 temp_obj["val_bs"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_bs"] = last_obs["amount"]
-
-
             elif obs["is_kraken"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_kr"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_kr"]= last_obs["avg_amount"]
@@ -92,14 +89,9 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_kr"] = last_obs["min_price"]
                 temp_obj["max_pr_kr"] = last_obs["max_price"]
                 temp_obj["val_kr"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_kr"] = last_obs["amount"]
-
-
             elif obs["is_coinbase"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_cb"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_cb"]= last_obs["avg_amount"]
@@ -107,20 +99,15 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_cb"] = last_obs["min_price"]
                 temp_obj["max_pr_cb"] = last_obs["max_price"]
                 temp_obj["val_cb"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_cb"] = last_obs["amount"]
-
-
             last_obs = obs    
 
         else:
             new_data.append(temp_obj) 
-            temp_obj = {"interval_id": None, "year": None, "month": None, "day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None, "VWAP": None}    
+            temp_obj = {"interval_id": None, "year": None ,"day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None}    
             
             if obs["is_bitfinex"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_bf"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_bf"]= last_obs["avg_amount"]
@@ -128,14 +115,19 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_bf"] = last_obs["min_price"]
                 temp_obj["max_pr_bf"] = last_obs["max_price"]
                 temp_obj["val_bf"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_bf"] = last_obs["amount"]
-
-
+            elif obs["is_binance"]==1:
+                temp_obj["interval_id"] =  last_obs["interval_id"]
+                temp_obj["year"] = last_obs["year"]
+                temp_obj["day"] = last_obs["day"]
+                temp_obj["avg_sec_bn"] = last_obs["avg_seconds_since_midnight"]
+                temp_obj["avg_am_bn"]= last_obs["avg_amount"]
+                temp_obj["avg_pr_bn"] = last_obs["avg_price"]
+                temp_obj["min_pr_bn"] = last_obs["min_price"]
+                temp_obj["max_pr_bn"] = last_obs["max_price"]
+                temp_obj["val_bn"] = last_obs["value"]
             elif obs["is_bitstamp"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_bs"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_bs"]= last_obs["avg_amount"] 
@@ -143,14 +135,9 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_bs"] = last_obs["min_price"] 
                 temp_obj["max_pr_bs"] = last_obs["max_price"]
                 temp_obj["val_bs"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_bs"] = last_obs["amount"]
-
-
             elif obs["is_kraken"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_kr"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_kr"]= last_obs["avg_amount"]
@@ -158,14 +145,9 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_kr"] = last_obs["min_price"] 
                 temp_obj["max_pr_kr"] = last_obs["max_price"] 
                 temp_obj["val_kr"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_kr"] = last_obs["amount"]
-
-
             elif obs["is_coinbase"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
-                temp_obj["month"] = last_obs["month"]
                 temp_obj["day"] = last_obs["day"]
                 temp_obj["avg_sec_cb"] = last_obs["avg_seconds_since_midnight"]
                 temp_obj["avg_am_cb"]= last_obs["avg_amount"]
@@ -173,10 +155,6 @@ def Observ_merge(data,interval):
                 temp_obj["min_pr_cb"] = last_obs["min_price"] 
                 temp_obj["max_pr_cb"] = last_obs["max_price"] 
                 temp_obj["val_cb"] = last_obs["value"]
-                temp_obj["VWAP"] = last_obs["VWAP"]
-                temp_obj["amount_cb"] = last_obs["amount"]
-
-
             last_obs = obs    
   
-    return new_data
+    return new_data    
