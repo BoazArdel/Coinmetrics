@@ -27,10 +27,10 @@ for i in range(0, len(start_time_date)):
 
 json.dump(mydata, dumpfile)
 
-'''
+
 with open('Data/data_dump_monthly2021-03-19 19:59:57.408658.txt') as json_file:
     mydata = json.load(json_file)
-#'''
+
 #adding parameters
 for obs in mydata:
     obs["time"] = datetime.datetime.strptime(obs["timestamp"], '%Y-%m-%dT%H:%M:%S.%f000Z')
@@ -46,6 +46,6 @@ mydata = preparing.Observ_merge(mydata,interval)
 with open('Data/prepared_data_'+now+'.txt', 'w') as outfile:
     json.dump(mydata, outfile, indent=4, sort_keys=True, default=str)
 
-exporter.export_to_excel(mydata,["interval_id", "year", "month", "day", "avg_sec_bs", "avg_am_bs", "avg_pr_bs", "min_pr_bs", "max_pr_bs", "val_bs", "avg_sec_kr", "avg_am_kr", "avg_pr_kr", "min_pr_kr", "max_pr_kr", "val_kr", "avg_sec_bf", "avg_am_bf", "avg_pr_bf", "min_pr_bf", "max_pr_bf", "val_bf", "avg_sec_cb", "avg_am_cb", "avg_pr_cb", "min_pr_cb", "max_pr_cb", "val_cb", "VWAP", "amount_bs", "amount_bf", "amount_cb", "amount_kr"])
-#'''
+exporter.export_to_excel(mydata,["interval_id", "year", "month", "day", "avg_sec_bs", "avg_am_bs", "avg_pr_bs", "min_pr_bs", "max_pr_bs", "val_bs", "avg_sec_kr", "avg_am_kr", "avg_pr_kr", "min_pr_kr", "max_pr_kr", "val_kr", "avg_sec_bf", "avg_am_bf", "avg_pr_bf", "min_pr_bf", "max_pr_bf", "val_bf", "avg_sec_cb", "avg_am_cb", "avg_pr_cb", "min_pr_cb", "max_pr_cb", "val_cb", "VWAP_bs", "VWAP_bf", "VWAP_cb", "VWAP_kr","amount_btc_bs", "amount_btc_bf", "amount_btc_cb", "amount_btc_kr"])
+'''
 exporter.xlsx_to_dta(input("without suffix, your excel name:"))

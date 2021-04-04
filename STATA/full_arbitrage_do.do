@@ -1,7 +1,6 @@
 set more off 
 
-use "\\Mac\Google Drive\Projects\GitHub\Coinmetrics\Data\full_data_20.3.dta", clear
-*use full_data_20.3.dta   
+use "\\Mac\Google Drive\Projects\GitHub\Coinmetrics\Data\full_data_4.4.dta", clear
 
 * includes jan 2017 to march 2021, 1 min interval, bs, bf, kr, cb exchanges, btc to usd markets. 
 
@@ -72,13 +71,13 @@ gen cb_max_kr_min =  (max_pr_cb - min_pr_kr)/min_pr_kr*100
 
 * generating month_id * 
 
-*gen id = month
-*replace id = id+12 if year ==2018
-*replace id = id
-*replace id = id+24 if year ==2019
-*replace id = id+36 if year ==2020
-*replace id = id+48 if year ==2021
-*rename id month_id
+gen id = month
+replace id = id+12 if year ==2018
+replace id = id
+replace id = id+24 if year ==2019
+replace id = id+36 if year ==2020
+replace id = id+48 if year ==2021
+rename id month_id
 
 * summary statistics and correlation calculations * 
 
@@ -134,3 +133,9 @@ foreach var of varlist *_min {
         }
     }
 }
+
+
+*dropping to 51 observations- one for each month
+duplicates drop month_id, force
+
+drop avg_sec_bs avg_am_bs avg_pr_bs min_pr_bs max_pr_bs val_bs avg_sec_kr avg_am_kr avg_pr_kr min_pr_kr max_pr_kr val_kr avg_sec_bf avg_am_bf min_pr_bf max_pr_bf val_bf avg_sec_cb avg_am_cb avg_pr_cb min_pr_cb max_pr_cb val_cb VWAP_bs VWAP_bf VWAP_cb VWAP_cb VWAP_kr amount_btc_bs amount_btc_bf amount_btc_cb amount_btc_kr kr_diff bs_diff bf_diff cb_diff bs_kr_diff kr_bs_diff bf_kr_diff kr_bf_diff bs_bf_diff bf_bs_diff bf_cb_diff cb_bf_diff cb_kr_diff kr_cb_diff cb_bs_diff bs_cb_diff bs_max_kr_min bf_max_kr_min bs_max_bf_min kr_max_bs_min kr_max_bf_min bf_max_bs_min bf_max_cb_min cb_max_bf_min bs_max_cb_min cb_max_bs_min kr_max_cb_min cb_max_kr_min drop avg_pr_bf
