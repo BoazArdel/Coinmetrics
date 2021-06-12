@@ -2,21 +2,28 @@ import json
 import datetime
 from os import read
 from passwords import API_KEY
-
+import sys
+'''
 #local lib
 import miner
 import preparing
 import exporter
 import date_iterator
+'''
+SN = ""
+if len(sys.argv)!=1:
+    SN = sys.argv[1]    
+
+
 
 mydata = []
 now = str(datetime.datetime.now())
 
 print("starting run" + now)
 
-'''
-dumpfile = open('Data/data_dump_monthly_'+now+'.txt', 'w')
-outfile = open('Data/data_incremental_monthly_'+now+'.txt', 'w')
+
+dumpfile = open('Data/data_dump_monthly_'+now+SN+'.txt', 'w')
+outfile = open('Data/data_incremental_monthly_'+now+SN+'.txt', 'w')
 start_time_date, end_time_date = date_iterator.date_func("2017-01-01T00:00:00.000000000Z","2021-04-01T00:00:00.000000000Z")
 
 #print(start_time_date)
@@ -28,9 +35,11 @@ for i in range(0, len(start_time_date)):
     mydata = mydata + miner.getDataByEndDate('https://api.coinmetrics.io/v4/timeseries/market-trades?start_time='+start_time_date[i]+'&paging_from=start&markets=coinbase-btc-usd-spot&pretty=true&api_key=' + API_KEY,end_time_date[i],outfile)
 
 json.dump(mydata, dumpfile)
-'''
+
 
 with open('Data/data_dump_monthly2021-03-19 19:59:57.408658.txt') as json_file:
+
+with open('Data/prepared_data_2021-04-06 15/04/36.016092.txt') as json_file:
     mydata = json.load(json_file)
 
 #adding parameters
@@ -45,9 +54,13 @@ mydata = sorted(mydata,key=(lambda s: s['time']))
 mydata = preparing.Observ_merge(mydata,interval)
 
 
+mydata = preparing.non_interval_calculations(mydata)
+
 with open('Data/prepared_data_'+now+'.txt', 'w') as outfile:
     json.dump(mydata, outfile, indent=4, sort_keys=True, default=str)
 
-exporter.export_to_excel(mydata,["interval_id", "year", "month", "day", "avg_sec_bs", "avg_am_bs", "avg_pr_bs", "min_pr_bs", "max_pr_bs", "val_bs", "avg_sec_kr", "avg_am_kr", "avg_pr_kr", "min_pr_kr", "max_pr_kr", "val_kr", "avg_sec_bf", "avg_am_bf", "avg_pr_bf", "min_pr_bf", "max_pr_bf", "val_bf", "avg_sec_cb", "avg_am_cb", "avg_pr_cb", "min_pr_cb", "max_pr_cb", "val_cb", "VWAP_bs", "VWAP_bf", "VWAP_cb", "VWAP_kr","amount_btc_bs", "amount_btc_bf", "amount_btc_cb", "amount_btc_kr", "num_trades_bs", "num_trades_bf", "num_trades_cb", "num_trades_kr"])
+
+exporter.export_to_excel(mydata,["interval_id", "year", "month", "day", "avg_sec_bs", "avg_am_bs", "avg_pr_bs", "min_pr_bs", "max_pr_bs", "val_bs", "avg_sec_kr", "avg_am_kr", "avg_pr_kr", "min_pr_kr", "max_pr_kr", "val_kr", "avg_sec_bf", "avg_am_bf", "avg_pr_bf", "min_pr_bf", "max_pr_bf", "val_bf", "avg_sec_cb", "avg_am_cb", "avg_pr_cb", "min_pr_cb", "max_pr_cb", "val_cb", "VWAP_bs", "VWAP_bf", "VWAP_cb", "VWAP_kr","amount_btc_bs", "amount_btc_bf", "amount_btc_cb", "amount_btc_kr", "num_trades_bs", "num_trades_bf", "num_trades_cb", "num_trades_kr", "max_VWAP", "min_VWAP", "arbitrage_index"])
 
 exporter.xlsx_to_dta(input("without suffix, your excel name:"))
+

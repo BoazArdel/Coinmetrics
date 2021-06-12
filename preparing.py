@@ -1,4 +1,7 @@
 ####################### DATA Preparation ################
+from os import fchdir
+
+
 def avarage_interval_creator(data,interval):
     last_interval = 0
     temp_amount_sum = 0
@@ -13,9 +16,6 @@ def avarage_interval_creator(data,interval):
     market = None
 
     for obs in data:
-        for exchange in obs["market"]:
-            daily_amount = obs["amount"]
-
         if int(obs["seconds_since_midnight"]/interval) == int(last_interval):
             temp_amount_sum = temp_amount_sum + float(obs["amount"])
             temp_time_sum = temp_time_sum + obs["seconds_since_midnight"]
@@ -49,10 +49,11 @@ def avarage_interval_creator(data,interval):
 
 def Observ_merge(data,interval):
     new_data = []
-    temp_obj = {"interval_id": None, "year": None ,"month": None, "day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None, "amount_btc_bs": None, "amount_btc_bf": None, "amount_btc_cb": None, "amount_btc_kr": None, "VWAP_bs": None, "VWAP_bf": None, "VWAP_cb": None, "VWAP_kr": None, "num_trades_bs": None, "num_trades_bf": None, "num_trades_cb": None, "num_trades_kr": None}
+    temp_obj = {"interval_id": None, "year": None ,"month": None, "day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None, "amount_btc_bs": None, "amount_btc_bf": None, "amount_btc_cb": None, "amount_btc_kr": None, "VWAP_bs": None, "VWAP_bf": None, "VWAP_cb": None, "VWAP_kr": None, "num_trades_bs": None, "num_trades_bf": None, "num_trades_cb": None, "num_trades_kr": None, "daily_am_bs": None, "daily_am_bf": None, "daily_am_cb": None, "daily_am_kr": None, "max_VWAP": None, "min_VWAP": None, "arbitrage_index": None}
     last_obs = data[0]
 
     for obs in data:
+
         if (obs["interval_id"] == last_obs["interval_id"]) and (obs["day"] == last_obs["day"]): 
             
             if obs["is_bitfinex"]==1:
@@ -86,8 +87,6 @@ def Observ_merge(data,interval):
                 temp_obj["num_trades_bs"] = last_obs["num_trades"]
 
 
-
-
             elif obs["is_kraken"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
@@ -105,7 +104,6 @@ def Observ_merge(data,interval):
 
 
 
-
             elif obs["is_coinbase"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
                 temp_obj["year"] = last_obs["year"]
@@ -120,7 +118,6 @@ def Observ_merge(data,interval):
                 temp_obj["VWAP_cb"] = last_obs["VWAP"]
                 temp_obj["amount_btc_cb"] = last_obs["amount"]
                 temp_obj["num_trades_cb"] = last_obs["num_trades"]
-
 
 
             last_obs = obs    
@@ -201,3 +198,12 @@ def Observ_merge(data,interval):
             last_obs = obs    
   
     return new_data
+
+def non_interval_calculations (new_data):
+    new_new_data=[]
+
+
+    min_VWAP
+    max_VWAP 
+    arbitrage_index = max_VWAP/min_VWAP
+    return new_new_data

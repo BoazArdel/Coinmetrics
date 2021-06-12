@@ -25,11 +25,11 @@ def export_to_excel(data,columns_table):
 
 #excel xslx to dta convertor
 def xlsx_to_dta(filename):
-    pd.read_excel(filename + '.xlsx', index_col=0).to_stata(filename + '.dta')
+    pd.read_excel('Data/'filename + '.xlsx', index_col=0).to_stata('Data/'filename + '.dta')
 
 #csv to dta convertor
 def csv_to_dta(filename):
-    pd.read_csv(filename + '.csv').to_stata(filename + '.dta')
+    pd.read_csv('Data/'filename + '.csv').to_stata('Data/'filename + '.dta')
 
 '''
 def csv_merger():
