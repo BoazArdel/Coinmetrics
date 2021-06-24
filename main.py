@@ -3,13 +3,13 @@ import datetime
 from os import read
 from passwords import API_KEY
 import sys
-'''
+
 #local lib
 import miner
 import preparing
 import exporter
 import date_iterator
-'''
+
 SN = ""
 if len(sys.argv)!=1:
     SN = sys.argv[1]    
