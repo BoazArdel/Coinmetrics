@@ -22,7 +22,7 @@ def export_to_excel(data,columns_table):
     canvas1.create_window(150, 150, window=saveAsButtonExcel)
 
     root.mainloop()
-
+'''
 #excel xslx to dta convertor
 def xlsx_to_dta(filename):
     pd.read_excel('Data/'filename + '.xlsx', index_col=0).to_stata('Data/'filename + '.dta')
@@ -31,7 +31,7 @@ def xlsx_to_dta(filename):
 def csv_to_dta(filename):
     pd.read_csv('Data/'filename + '.csv').to_stata('Data/'filename + '.dta')
 
-'''
+
 def csv_merger():
     fout=open("d:/Files/Google Drive (gabryu@gmail.com)/Projects/PycharmProjects/coinmetrics/out.csv","a")
     # first file:

@@ -1,5 +1,6 @@
 ####################### DATA Preparation ################
 from os import fchdir
+import pandas as pd
 
 
 def avarage_interval_creator(data,interval):
@@ -12,17 +13,17 @@ def avarage_interval_creator(data,interval):
     max_price = 0
     counter = 0
     new_data = []
-    last_time = None
-    market = None
+    last_time = ""
+    market = ""
 
-    for obs in data:
+    for obs in data.iloc:
         if int(obs["seconds_since_midnight"]/interval) == int(last_interval):
             temp_amount_sum = temp_amount_sum + float(obs["amount"])
             temp_time_sum = temp_time_sum + obs["seconds_since_midnight"]
             temp_price_sum = temp_price_sum + float(obs["price"])
             temp_pq_sum = temp_pq_sum + float(obs["p*q"])
             market = obs["market"]
-            last_time = obs["time"]
+            last_time = obs["timestamp"]
             counter = counter + 1
             
             if counter==1:
@@ -41,18 +42,18 @@ def avarage_interval_creator(data,interval):
             temp_price_sum = float(obs["price"])
             temp_pq_sum = float(obs["p*q"])
             counter = 1
-            last_time = obs["time"]
+            last_time = obs["timestamp"]
             market = obs["market"]
             min_price = max_price = float(obs["price"])
     
-    return new_data
+    return pd.DataFrame(new_data)
 
-def Observ_merge(data,interval):
+def Observ_merge(data):
     new_data = []
-    temp_obj = {"interval_id": None, "year": None ,"month": None, "day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None, "amount_btc_bs": None, "amount_btc_bf": None, "amount_btc_cb": None, "amount_btc_kr": None, "VWAP_bs": None, "VWAP_bf": None, "VWAP_cb": None, "VWAP_kr": None, "num_trades_bs": None, "num_trades_bf": None, "num_trades_cb": None, "num_trades_kr": None, "daily_am_bs": None, "daily_am_bf": None, "daily_am_cb": None, "daily_am_kr": None, "max_VWAP": None, "min_VWAP": None, "arbitrage_index": None}
-    last_obs = data[0]
-
-    for obs in data:
+    temp_obj = {"interval_id": "", "year": "" ,"month": "", "day": "", "avg_sec_bs": "", "avg_am_bs": "", "avg_pr_bs": "", "min_pr_bs": "", "max_pr_bs": "", "val_bs": "", "avg_sec_kr": "", "avg_am_kr": "", "avg_pr_kr": "", "min_pr_kr": "", "max_pr_kr": "", "val_kr": "", "avg_sec_bf": "", "avg_am_bf": "", "avg_pr_bf": "", "min_pr_bf": "", "max_pr_bf": "", "val_bf": "", "avg_sec_cb": "", "avg_am_cb": "", "avg_pr_cb": "", "min_pr_cb": "", "max_pr_cb": "", "val_cb": "", "amount_btc_bs": "", "amount_btc_bf": "", "amount_btc_cb": "", "amount_btc_kr": "", "VWAP_bs": "", "VWAP_bf": "", "VWAP_cb": "", "VWAP_kr": "", "num_trades_bs": "", "num_trades_bf": "", "num_trades_cb": "", "num_trades_kr": "", "daily_am_bs": "", "daily_am_bf": "", "daily_am_cb": "", "daily_am_kr": "", "max_VWAP": "", "min_VWAP": "", "arbitrage_index": ""}
+    last_obs = data.iloc[0]
+    
+    for obs in data.iloc:
 
         if (obs["interval_id"] == last_obs["interval_id"]) and (obs["day"] == last_obs["day"]): 
             
@@ -119,12 +120,12 @@ def Observ_merge(data,interval):
                 temp_obj["amount_btc_cb"] = last_obs["amount"]
                 temp_obj["num_trades_cb"] = last_obs["num_trades"]
 
-
+            print(last_obs["interval_id"])
             last_obs = obs    
 
         else:
             new_data.append(temp_obj) 
-            temp_obj = {"interval_id": None, "year": None, "month": None, "day": None, "avg_sec_bs": None, "avg_am_bs": None, "avg_pr_bs": None, "min_pr_bs": None, "max_pr_bs": None, "val_bs": None, "avg_sec_kr": None, "avg_am_kr": None, "avg_pr_kr": None, "min_pr_kr": None, "max_pr_kr": None, "val_kr": None, "avg_sec_bf": None, "avg_am_bf": None, "avg_pr_bf": None, "min_pr_bf": None, "max_pr_bf": None, "val_bf": None, "avg_sec_cb": None, "avg_am_cb": None, "avg_pr_cb": None, "min_pr_cb": None, "max_pr_cb": None, "val_cb": None, "VWAP_bs": None, "VWAP_bf": None, "VWAP_cb": None, "VWAP_kr": None, "num_trades_bs": None, "num_trades_bf": None, "num_trades_cb": None, "num_trades_kr": None}    
+            temp_obj = {"interval_id": "", "year": "", "month": "", "day": "", "avg_sec_bs": "", "avg_am_bs": "", "avg_pr_bs": "", "min_pr_bs": "", "max_pr_bs": "", "val_bs": "", "avg_sec_kr": "", "avg_am_kr": "", "avg_pr_kr": "", "min_pr_kr": "", "max_pr_kr": "", "val_kr": "", "avg_sec_bf": "", "avg_am_bf": "", "avg_pr_bf": "", "min_pr_bf": "", "max_pr_bf": "", "val_bf": "", "avg_sec_cb": "", "avg_am_cb": "", "avg_pr_cb": "", "min_pr_cb": "", "max_pr_cb": "", "val_cb": "", "VWAP_bs": "", "VWAP_bf": "", "VWAP_cb": "", "VWAP_kr": "", "num_trades_bs": "", "num_trades_bf": "", "num_trades_cb": "", "num_trades_kr": ""}    
             
             if obs["is_bitfinex"]==1:
                 temp_obj["interval_id"] =  last_obs["interval_id"]
@@ -193,17 +194,14 @@ def Observ_merge(data,interval):
                 temp_obj["amount_btc_cb"] = last_obs["amount"]
                 temp_obj["num_trades_cb"] = last_obs["num_trades"]
 
+            last_obs = obs  
+    print(new_data)
+    return pd.DataFrame(new_data)
 
+def non_interval_calculations(data):
+    new_data=[]
 
-            last_obs = obs    
-  
+    #min_VWAP
+    #max_VWAP 
+    #arbitrage_index = max_VWAP/min_VWAP
     return new_data
-
-def non_interval_calculations (new_data):
-    new_new_data=[]
-
-
-    min_VWAP
-    max_VWAP 
-    arbitrage_index = max_VWAP/min_VWAP
-    return new_new_data
