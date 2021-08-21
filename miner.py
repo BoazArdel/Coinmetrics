@@ -8,7 +8,7 @@ def getDataByEndDate(url,selected_date,output_file):
     
     data = []
     response = requests.get(url).json()
-    for i in range(0,10000): 
+    for i in range(0,100000000): 
         if(response["data"][0]["time"]>selected_date): break
         #print(json.dumps(response, indent=4, sort_keys=True)) <if DEBUG>
         
